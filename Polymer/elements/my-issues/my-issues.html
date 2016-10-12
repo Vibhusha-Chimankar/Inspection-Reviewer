@@ -36,15 +36,15 @@
         </drones-data-service>
         <report-type-data-service url="/report-type.json" report-type-service-response="{{reportTypeServiceResponse}}">
         </report-type-data-service>
-        <!-- <div class="horizontal-section">
-             <span style="background: #F3F3F3;widht:20%;margin-left: 40%;">
+        <div class="horizontal-section">
+            <!--  <span style="background: #F3F3F3;widht:20%;margin-left: 40%;"> -->
             <paper-icon-button icon="camera-enhance" class="grid-view-selected" id="cameraEnhance" on-click="cameraEnhanceSelected"></paper-icon-button>
             <paper-icon-button icon="av:videocam" class="grid-view" id="videocam" on-click="videocamSelected"></paper-icon-button>
             <paper-icon-button icon="invert-colors" class="grid-view" id="invertColorIssue" on-click="invertColorIssueSelected"></paper-icon-button>
             <paper-icon-button icon="sort" class="grid-view" id="sort" on-click="sortSelected"></paper-icon-button>
             <paper-icon-button icon="hardware:headset" class="grid-view" id="headset" on-click="headsetSelected"></paper-icon-button>
-             </span>
-        </div> -->
+            <!--  </span> -->
+        </div>
         <div class="image-gallery-issue">
         <template is="dom-repeat" items="{{issuesServiceResponse}}">
             <template is="dom-repeat" items="{{item.inspection}}">
