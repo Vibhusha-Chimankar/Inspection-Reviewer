@@ -1,0 +1,109 @@
+<!-- Polymer web component used to display assets list -->
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<dom-module id="my-assets">
+    <template is="dom-bind">
+        <style>
+        :host {
+            display: block;
+        }
+        </style>
+        <drones-data-service id="ajaxAsset" url="{{url}}" drones-service-response="{{dronesServiceResponse}}">
+        </drones-data-service>
+         <div class="image-gallery">
+        <iron-selector selected="0">
+         <template is="dom-repeat" items="{{dronesServiceResponse}}">
+                <template is="dom-repeat" items="{{item.inspection}}">
+                    <a class="nav-link" is="pushstate-anchor" id="{{item.id}}" href="{{item.url}}">
+                        <span class="inspections-title">{{item.date}}</span>
+                        <span style="font-size:10px">{{item.duration}}</span>
+                </template>
+            </template>
+            </a>
+           </iron-selector>
+        </div>
+        <br/>
+        <br/>
+        <div class="bottom-section">
+        <span style="padding-left: 15px;">
+  <paper-icon-button icon="add-circle" class="add-delete-view"></paper-icon-button>
+  </span>
+        <span style="padding-left: 25px;">
+  <paper-icon-button icon="delete" class="add-delete-view"></paper-icon-button>
+  </span>
+  </div>
+    </template>
+    <script>
+    (function() {
+        Polymer({
+            is: 'my-assets',
+
+            properties: {
+                selected: {
+                    value: 0
+                },
+
+                dronesServiceResponse: {
+                    type: Array,
+                    value: function() {
+                        return [];
+                    },
+                    notify: true,
+                    observer: 'handleResponse'
+                },
+                inspection: {
+                    type: Array,
+                    notify: true,
+                    value: function() {
+                        return [];
+                    }
+                },
+                url: {
+                    type: String,
+                    value : '/drones.json'
+                }
+            },
+
+            handleResponse: function() {
+                console.log(this.dronesServiceResponse);
+                debugger;
+               if (typeof(this.dronesServiceResponse[localStorage.getItem('assetId')]) != 'undefined') {
+
+                    this.inspection = this.dronesServiceResponse[localStorage.getItem('assetId')].inspection;
+                    this.path = this.inspection[0].url;
+                    this.path = '/' + this.path;
+                    this.urlState(this.path);
+                }
+            },
+            ready: function(){
+                 if(localStorage.getItem('assetId') == "1"){
+                    this.url = "/drones-compressor.json";
+                     this.$.ajaxAsset.url = this.url;
+                }
+                else if(localStorage.getItem('assetId') == "2"){
+                    this.url = "/drones-tank.json";
+                    this.$.ajaxAsset.url = this.url;
+                }
+                else if(localStorage.getItem('assetId') == "3"){
+                    this.url = "/drones-intake.json";
+                   this.$.ajaxAsset.url = this.url;
+                }
+                else{
+                     this.url = "/drones.json";
+                    document.getElementById('ajaxAsset').url = this.url;
+                }
+            },
+            urlState: function(urlPath) {
+                //  debugger;
+                window.history.pushState('', '', urlPath);
+                window.dispatchEvent(new PopStateEvent('popstate', {
+                    bubbles: false,
+                    cancelable: false,
+                    state: {
+                        message: ''
+                    }
+                }));
+            },
+        });
+    })();
+    </script>
+    </dom-module>

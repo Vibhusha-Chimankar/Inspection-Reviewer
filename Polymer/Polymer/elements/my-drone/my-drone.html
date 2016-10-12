@@ -1,0 +1,117 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="my-drone">
+  <template is="dom-bind">
+    <style>
+      :host {
+        display: block;
+      }
+
+    </style>
+
+
+
+    <drones-data-service url="/drones.json" drones-service-response="{{dronesServiceResponse}}">
+    </drones-data-service>
+    <iron-ajax id="ajax" url="/drones.json" on-response="handleResponse" auto></iron-ajax>
+
+
+    <paper-drawer-panel>
+    <paper-header-panel main id="main">
+    <div class="left-section">
+    <paper-header-panel drawer left-drawer>
+    <div>
+    <iron-ajax auto url="/drones.json" handle-as="json" last-response="{{data}}" ></iron-ajax>
+    <iron-selector attr-for-selected="id" id="1">
+    <template is="dom-repeat" items="{{data}}">
+    <a class="nav-link" is="pushstate-anchor" id="{{item.id}}" href="{{item.url}}">{{item.title}}
+    <template is="dom-repeat" items="{{item.images}}">
+    <iron-image width="30" height="30" src="{{item.path}}"></iron-image>
+    </template>
+    </a>
+     </template>
+    </iron-selector>
+    </div>
+    </paper-header-panel>
+    </div>
+    <div class="right-section">
+    <paper-header-panel drawer right-drawer>
+    <div>
+
+    <paper-tabs selected="{{selected}}" name="media">
+      <paper-tab name="media" class="main-tab-sec">Media</paper-tab>
+      <paper-tab name="issues" class="main-tab-sec">Issues</paper-tab>
+    </paper-tabs>
+
+    <app-router>
+      <app-route path="/drone-one" import="/elements/drone-one/drone-one.html"></app-route>
+      <app-route path="/drone2" import="/elements/my-users/my-users.html"></app-route>
+      <app-route path="/drone3" import="/elements/my-pathextractor/my-pathextractor.html"></app-route>
+    </app-router>
+    </div>
+    </paper-header-panel>
+    </div>
+    <div class="main-section">
+      <iron-pages selected="{{selected}}">
+    <div>
+    <my-media></my-media>
+    </div>
+    <div>Page 2</div>
+  </iron-pages>
+    </div>
+    </paper-header-panel>
+    </paper-drawer-panel>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'my-drone',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'my-drone',
+          notify: true
+        },
+
+        selected: {
+        value: 0
+                  },
+
+      dronesServiceResponse: {
+                type: Array,
+                value:[],
+                notify: true
+            }
+      },
+
+     handleResponse: function() {
+            this.dronesServiceResponse = this.$.ajax.lastResponse;
+             console.log(this.dronesServiceResponse);
+           
+
+        }
+
+    });
+  })();
+  </script>
+
+  <script>
+  document.addEventListener('WebComponentsReady', function () {
+    var template = document.querySelector('template[is="dom-bind"]');
+    template.selected = 0; // selected is an index by default
+  });
+</script>
+</dom-module>

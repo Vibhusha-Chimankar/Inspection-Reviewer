@@ -1,0 +1,76 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="my-iassets">
+  <template is="dom-bind">
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <!-- <iron-ajax auto url="/drones.json" handle-as="json" last-response="{{data}}" ></iron-ajax> -->
+
+    <drones-data-service url="/issues.json" drones-service-response="{{issuesServiceResponse}}">
+    </drones-data-service>
+    <iron-selector selected="0">
+    <template is="dom-repeat" items="{{issuesServiceResponse}}">
+    <template is="dom-repeat" items="{{item.inspection}}">
+    <a class="nav-link" is="pushstate-anchor" id="{{item.id}}" href="{{item.url}}">
+    <span class="inspections-title">{{item.date}}</span>
+    </template>
+    </template>
+    </a>
+    </iron-selector>
+    <br/>
+        <span style="padding-left: 15px">
+  <paper-icon-button icon="add-circle" class="add-delete-view"></paper-icon-button>
+  </span>
+        <span style="padding-left: 25px;">
+  <paper-icon-button icon="delete" class="add-delete-view"></paper-icon-button>
+  </span>
+ 
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: 'my-iassets',
+
+      properties: {
+       selected: {
+        value: 0
+                  },
+
+        issuesServiceResponse: {
+                type: Array,
+                value: function() {
+                    return [];
+                },
+                notify: true,
+                observer: 'handleResponse'
+            }
+          },
+
+       handleResponse: function() {
+                console.log(this.issuesServiceResponse);
+                if (typeof(this.issuesServiceResponse[0]) != 'undefined') {
+
+                    this.inspection = this.issuesServiceResponse[0].inspection;
+                    this.path = this.inspection[0].url;
+                    this.path = '/' + this.path;
+                    this.urlState(this.path);
+                }
+            },
+            urlState: function(urlPath) {
+                //  debugger;
+                window.history.pushState('', '', urlPath);
+                window.dispatchEvent(new PopStateEvent('popstate', {
+                    bubbles: false,
+                    cancelable: false,
+                    state: {
+                        message: ''
+                    }
+                }));
+            },
+    });
+  })();
+  </script>
+</dom-module>

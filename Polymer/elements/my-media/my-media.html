@@ -1,0 +1,339 @@
+<!-- Polymer web component used to display media list -->
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<dom-module id="my-media">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        #ratings {
+    --paper-slider-active-color: #ccc;
+    --paper-slider-height: 15px;
+    --paper-slider-container-color: #f0f0f0;
+    width: 70%;
+    float: left;
+    margin-top: 10px;
+
+  }
+
+
+  #progressContainer {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 0 15px;
+    border-radius: 16px;
+}
+.paper-progress-0 #primaryProgress.paper-progress {
+    background: #ccc;
+    padding: 0 15px;
+    border-radius: 15px;
+}
+        </style>
+        <drones-data-service id="ajax" url="{{url}}" drones-service-response="{{droneServiceResponse}}">
+        </drones-data-service>
+        <div class="image-gallery">
+            <template is="dom-repeat" items="{{dronesServiceResponse}}">
+                <template is="dom-repeat" items="{{item.inspection}}">
+                    <div class="image-gall">
+                        <template is="dom-repeat" items="{{item.phase}}">
+                            <span class="phase-title">{{item.title}}<label class="phase-title">0 issues</label><paper-checkbox class="paper-checkbox">NEED REVIEW</paper-checkbox></span>
+                            <br/>
+                            <template is="dom-repeat" items="{{item.img}}">
+                                <!--  <div class="modal-body"> -->
+                                <div class="abc">
+                                    <paper-icon-button raised on-dblclick="toggleDialog" on-tap="addQuantity" src="{{item.miniPath}}" class="phases-img" id="{{item.id}}">
+                                        <!--  <img id="{{item.id}}" on-tap="addQuantity" raised class="phases-img" src="{{item.src}}"> -->
+                                    </paper-icon-button>
+                                    <img class$="{{item.class}}" src="{{item.issuePath}}">
+                                </div>
+                                <!-- </div> -->
+                                <paper-dialog heading="" id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+                                    <img src="{{item.miniPath}}" id="expandImg">
+                                    <div class="modal-footer ">
+                                        <paper-button dialog-dismiss class="btn-default">Close</paper-button>
+                                    </div>
+                                </paper-dialog>
+                            </template>
+                            <paper-dialog heading="" id="editDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+                                <div>
+                                    <span>
+                                Defect Type:
+                                <br/>
+                            </span>
+                                    <span>
+                                 <paper-dropdown-menu>
+                                <paper-listbox class="dropdown-content" selected="0">
+                                    <paper-item>Corrosion</paper-item>
+                                    <paper-item>Thinning</paper-item>
+                                    <paper-item>Stress cracking</paper-item>
+                                    <paper-item>Mechanical Fatigue</paper-item>
+                                    <paper-item>Thermal Fatigue</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            </span>
+                                </div>
+                                <div>
+                                    <span>
+                                Status:
+                                <br/>
+                            </span>
+                                    <span>
+                                  <paper-dropdown-menu>
+                                <paper-listbox class="dropdown-content" selected="0">
+                                    <paper-item>Fix</paper-item>
+                                    <paper-item>Continue to monitor</paper-item>
+                                    <paper-item>Manual Inspection</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            </span>
+                                </div>
+
+                                <div>
+                                    <span>
+                                Comment:
+                                <br/>
+                            </span>
+                                    <span>
+                                    <paper-input label="enter comments here"></paper-input>
+                            </span>
+                                </div>
+
+
+                                <div class="modal-footer ">
+                                    <paper-button dialog-dismiss class="submit" on-click="editSubmitClick">Submit</paper-button>
+                                    <paper-button dialog-dismiss class="close">Close</paper-button>
+                                </div>
+                            </paper-dialog>
+                            <!-- <paper-dialog heading="" id="commentDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+                                <span>Enter Comments Here:</span>
+                                <paper-textarea label="" id="textarea"></paper-textarea>
+                                <div class="modal-footer">
+                                    <paper-button dialog-dismiss class="submit">Submit</paper-button>
+                                    <paper-button dialog-dismiss class="close">Close</paper-button>
+                                </div>
+                            </paper-dialog> -->
+                            <div>
+                                <span class="edit">
+                        <paper-icon-button src="/images/edit.png" on-click="toggleDialogEdit"></paper-icon-button>
+                        </span>
+                                <!-- <span class="comment">
+                        <paper-icon-button src="/images/comment.png" on-click="toggleDialogComment"></paper-icon-button>
+                        </span> -->
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </template>
+        </div>
+
+        <paper-slider id="ratings" pin snaps min="0" max="18" max-markers="18" step="1" value="4.15" editable></paper-slider>
+        <paper-button class="reviewbtn pull-right">Review Issue</paper-button>
+        <!--  <paper-dialog id="modal" modal>
+            <template is="dom-repeat " items="{{dronesServiceResponse}} ">
+                <template is="dom-repeat " items="{{item.inspection}} ">
+                    <div class="image-gall ">
+                        <template is="dom-repeat " items="{{item.phase}} ">
+                            <template is="dom-if " if="{{item.img}}=='id' " items="{{item.img}} ">
+                                <img class="phases-img " src="{{item.src}} ">
+                            </template>
+                        </template>
+                    </div>
+                </template>
+            </template>
+            <div class="buttons ">
+                <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+            </div>
+        </paper-dialog> -->
+    </template>
+    <script>
+    (function() {
+        Polymer({
+            is: 'my-media',
+
+            properties: {
+                droneServiceResponse: {
+                    type: Array,
+                    value: function() {
+                        return [];
+                    },
+                    notify: true,
+                    observer: 'handleResponse'
+                },
+                dronesServiceResponse: {
+                    type: Array,
+                    value: function() {
+                        return [];
+                    },
+                    notify: true
+                        // observer: 'handleResponse'
+                },
+                phase: {
+                    type: Array,
+                    notify: true,
+                    value: function() {
+                        return [];
+                    }
+                },
+                idArr: {
+                    type: Array,
+                    value: []
+                },
+                url: {
+                    type: String,
+                    value: '/drones.json'
+                }
+            },
+            handleResponse: function() {
+                // debugger;
+                this.dronesServiceResponse = this.droneServiceResponse;
+                console.log(this.dronesServiceResponse);
+                if (this.dronesServiceResponse.length > 0) {
+                    var a = JSON.stringify(this.dronesServiceResponse);
+                    localStorage.setItem('dronesServiceResponse', a);
+                    this.dronesServiceResponse = JSON.parse(localStorage.getItem('dronesServiceResponse'));
+                    this.url = localStorage.getItem('url');
+                }
+
+            },
+            addQuantity: function(e) {
+                //debugger;
+                var target = e.model.item.id;
+                var id = document.querySelector('#' + target),
+                    style = window.getComputedStyle(id),
+                    border = style.getPropertyValue('border'),
+                    borderNone = "0px none rgb(0, 0, 0)";
+                if (border.toString() == borderNone) {
+                    id.style.border = "4px solid #049FCF";
+                    this.idArr.push(target);
+                } else {
+                    id.style.border = "none";
+                    var index = this.idArr.indexOf(target);
+                    this.idArr.splice(index, 1);
+                }
+                // console.log(this.stringify(this.dronesServiceResponse));
+                //  console.log(this.dronesServiceResponse);
+            },
+            editSubmitClick: function(e) {
+                //debugger;
+                var inspection;
+                var phase;
+                var inspectionArr;
+                var img = [];
+                var id = null;
+
+                if (this.idArr.length > 0) {
+                    for (var i = 0; i < this.dronesServiceResponse.length; i++) {
+                        inspection = this.dronesServiceResponse[i].inspection;
+                        for (var j = 0; j < inspection.length; j++) {
+                            inspectionArr = inspection[j].phase;
+                            //  phase.push(inspection[j].phase);
+
+
+                            for (var k = 0; k < inspectionArr.length; k++) {
+                                phase = inspectionArr[k].img;
+                                for (var b = 0; b < phase.length; b++) {
+                                    img.push(phase[b]);
+                                }
+
+                            }
+                        }
+                    }
+                    for (var i = 0; i < img.length; i++) {
+                        for (var k = 0; k < this.idArr.length; k++) {
+                            if (this.idArr[k] == img[i].id) {
+                                img[i].issuePath = "/images/marker.png";
+                                img[i].classPath = "issue-marker";
+                            }
+                        }
+                    }
+
+
+                    for (var i = 0; i < this.dronesServiceResponse.length; i++) {
+                        inspection = null;
+                        inspectionArr = null;
+                        phase = null;
+                        inspection = this.dronesServiceResponse[i].inspection;
+                        for (var j = 0; j < inspection.length; j++) {
+                            inspectionArr = inspection[j].phase;
+                            //  phase.push(inspection[j].phase);
+
+
+                            for (var k = 0; k < inspectionArr.length; k++) {
+                                phase = inspectionArr[k].img;
+                                for (var b = 0; b < phase.length; b++) {
+                                    // img.push(phase[b]);
+                                    for (var x = 0; x < img.length; x++) {
+                                        for (var l = 0; l < this.idArr.length; l++) {
+                                            if (this.idArr[l] == img[x].id &&
+                                                img[x].id == phase[b].id) {
+                                                phase[b] = img[x];
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    console.log('hi');
+                    console.log(this.dronesServiceResponse);
+                    debugger;
+                    this.url = "/drones1.json";
+                    localStorage.setItem('url', this.url);
+                    localStorage.setItem('issueUrl', '/issues1.json');
+                    document.getElementById('ajax').url = this.url;
+                    document.getElementById('ajax').generateRequest();
+                    this.urlState('/my-iassets');
+                    var a = document.querySelector("#media");
+                    var b = document.querySelector("#issues");
+                    a.style.display = "none";
+                    b.style.display = "block";
+                    var b = document.querySelector("#issuesTab");
+                    b.selected = "1";
+
+
+                } else {
+                    alert('Please select image');
+                }
+            },
+            toggleDialog: function(e) {
+                var dialog = document.querySelector('#dialog');
+                var expand = document.querySelector('#expandImg');
+                expand.src = e.model.item.miniPath;
+                dialog.toggle();
+            },
+            toggleDialogEdit: function(e) {
+                var dialog = document.querySelector('#editDialog');
+                dialog.toggle();
+            },
+            /*toggleDialogComment: function(e) {
+                var dialog = document.querySelector('#commentDialog');
+                dialog.toggle();
+            },*/
+            stringify: function(obj) {
+                return JSON.stringify(obj);
+            },
+            urlState: function(urlPath) {
+                debugger;
+                window.history.pushState('', '', urlPath);
+                window.dispatchEvent(new PopStateEvent('popstate', {
+                    bubbles: false,
+                    cancelable: false,
+                    state: {
+                        message: ''
+                    }
+                }));
+            }
+        });
+    })();
+    </script>
+
+    <script>
+  document.addEventListener('WebComponentsReady', function() {
+    var ratings = document.querySelector('#ratings');
+    ratings.addEventListener('value-change', function() {
+      document.querySelector('#ratingsLabel').textContent = ratings.value;
+    });
+  });
+</script>
+</dom-module>
