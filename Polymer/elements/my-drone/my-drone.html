@@ -21,6 +21,7 @@
     <drones-data-service url="/intake.json" drones-service-response="{{dronesServiceResponse}}">
     </drones-data-service> -->
         <!--  <iron-ajax id="ajax" url="/drones.json" on-response="handleResponse" auto></iron-ajax> -->
+        <div class="headin"></div>
         <paper-drawer-panel>
             <paper-header-panel main id="main">
                 <div class="left-section">
@@ -74,9 +75,9 @@
                                   <paper-icon-button icon="invert-colors" class="invert-color-view" on-click="invertColorSelected" id="invertColor"></paper-icon-button> -->
 
                                   <div class="zoom-slider">
-                                      
+                                      <span class="zoomTitle">Zoom</span>
                                       <span><input type="button" value="-" id="button" name="decrementButton" on-click="zoomOut"></span>
-            <span><input type="range" id="range" value="5" min="1" max="50" onchange="changeZoom(this.value)" style="margin-top: 10px"></span>
+            <span><input type="range" id="range" value="0" min="0" max="4" onchange="changeZoom(this.value)" style="margin-top: 10px"></span>
             <span><input type="button" value="+" id="button" name="incrementButton" on-click="zoomIn"></span>
 
 
