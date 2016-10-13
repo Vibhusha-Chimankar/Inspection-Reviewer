@@ -6,31 +6,32 @@
         :host {
             display: block;
         }
+        
         #ratings {
-    --paper-slider-active-color: #ccc;
-    --paper-slider-height: 15px;
-    --paper-slider-container-color: #f0f0f0;
-    width: 70%;
-    float: left;
-    margin-top: 10px;
-
-  }
-
-
-  #progressContainer {
-    background: #fff;
-    border: 1px solid #ccc;
-    padding: 0 15px;
-    border-radius: 16px;
-}
-.paper-progress-0 #primaryProgress.paper-progress {
-    background: #ccc;
-    padding: 0 15px;
-    border-radius: 15px;
-}
+            --paper-slider-active-color: #ccc;
+            --paper-slider-height: 15px;
+            --paper-slider-container-color: #f0f0f0;
+            width: 70%;
+            float: left;
+            margin-top: 10px;
+        }
+        
+        #progressContainer {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 0 15px;
+            border-radius: 16px;
+        }
+        
+        .paper-progress-0 #primaryProgress.paper-progress {
+            background: #ccc;
+            padding: 0 15px;
+            border-radius: 15px;
+        }
         </style>
         <drones-data-service id="ajax" url="{{url}}" drones-service-response="{{droneServiceResponse}}">
         </drones-data-service>
+        <iron-ajax auto id="issueAjax" url="/issue-marker.json" handle-as="json" on-response="handleResponseIssueMarker"></iron-ajax>
         <div class="image-gallery">
             <template is="dom-repeat" items="{{dronesServiceResponse}}">
                 <template is="dom-repeat" items="{{item.inspection}}">
@@ -45,7 +46,7 @@
                                     <paper-icon-button raised on-dblclick="toggleDialog" on-tap="addQuantity" src="{{item.miniPath}}" class="phases-img" id="{{item.id}}">
                                         <!--  <img id="{{item.id}}" on-tap="addQuantity" raised class="phases-img" src="{{item.src}}"> -->
                                     </paper-icon-button>
-                                    <img class$="{{item.class}}" src="{{item.issuePath}}">
+                                    <!--  <img class$="{{item.class}}" src="{{item.issuePath}}"> -->
                                 </div>
                                 
                                 <paper-dialog heading="" id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
@@ -103,17 +104,6 @@
                             </span>
                                 </div>
 
-                                <!-- <div>
-                                    <span>
-                                Comment:
-                                <br/>
-                            </span>
-                                    <span>
-                                    <paper-input label="enter comments here"></paper-input>
-                            </span>
-                                </div> -->
-
-
                                 <div class="modal-footer ">
                                     <paper-button dialog-dismiss class="submit" on-click="editSubmitClick">Submit</paper-button>
                                     <paper-button dialog-dismiss class="close">Close</paper-button>
@@ -140,7 +130,6 @@
                 </template>
             </template>
         </div>
-
         <paper-slider id="ratings" pin snaps min="0" max="18" max-markers="18" step="1" value="4.15" editable></paper-slider>
         <paper-button class="reviewbtn pull-right">Review Issue</paper-button>
         <!--  <paper-dialog id="modal" modal>
@@ -182,16 +171,24 @@
                     notify: true
                         // observer: 'handleResponse'
                 },
+                idArr: {
+                    type: Array,
+                    value: []
+                },
+                issueMarkerServiceResponse: {
+                    type: Array,
+                    value: function() {
+                        return [];
+                    },
+                    notify: true,
+                    observer: 'handleResponseIssueMarker'
+                },
                 phase: {
                     type: Array,
                     notify: true,
                     value: function() {
                         return [];
                     }
-                },
-                idArr: {
-                    type: Array,
-                    value: []
                 },
                 url: {
                     type: String,
@@ -210,8 +207,19 @@
                 }
 
             },
+            handleResponseIssueMarker: function() {
+                this.issueMarkerServiceResponse = this.$.issueAjax.lastResponse;
+                console.log('issue-marker:');
+                console.log(this.issueMarkerServiceResponse);
+                for (var i = 0; i < this.issueMarkerServiceResponse.length; i++) {
+                    var elem = document.createElement("img");
+                    elem.setAttribute("src", this.issueMarkerServiceResponse[i].issuePath);
+                    elem.setAttribute("class", this.issueMarkerServiceResponse[i].class);
+                    document.getElementById(this.issueMarkerServiceResponse[i].id).appendChild(elem);
+                }
+            },
             addQuantity: function(e) {
-                //debugger;
+                debugger;
                 var target = e.model.item.id;
                 var id = document.querySelector('#' + target),
                     style = window.getComputedStyle(id),
@@ -237,59 +245,59 @@
                 var id = null;
 
                 if (this.idArr.length > 0) {
-                    for (var i = 0; i < this.dronesServiceResponse.length; i++) {
-                        inspection = this.dronesServiceResponse[i].inspection;
-                        for (var j = 0; j < inspection.length; j++) {
-                            inspectionArr = inspection[j].phase;
-                            //  phase.push(inspection[j].phase);
+                    // for (var i = 0; i < this.dronesServiceResponse.length; i++) {
+                    //     inspection = this.dronesServiceResponse[i].inspection;
+                    //     for (var j = 0; j < inspection.length; j++) {
+                    //         inspectionArr = inspection[j].phase;
+                    //         //  phase.push(inspection[j].phase);
 
 
-                            for (var k = 0; k < inspectionArr.length; k++) {
-                                phase = inspectionArr[k].img;
-                                for (var b = 0; b < phase.length; b++) {
-                                    img.push(phase[b]);
-                                }
+                    //         for (var k = 0; k < inspectionArr.length; k++) {
+                    //             phase = inspectionArr[k].img;
+                    //             for (var b = 0; b < phase.length; b++) {
+                    //                 img.push(phase[b]);
+                    //             }
 
-                            }
-                        }
-                    }
-                    for (var i = 0; i < img.length; i++) {
-                        for (var k = 0; k < this.idArr.length; k++) {
-                            if (this.idArr[k] == img[i].id) {
-                                img[i].issuePath = "/images/marker.png";
-                                img[i].classPath = "issue-marker";
-                            }
-                        }
-                    }
-
-
-                    for (var i = 0; i < this.dronesServiceResponse.length; i++) {
-                        inspection = null;
-                        inspectionArr = null;
-                        phase = null;
-                        inspection = this.dronesServiceResponse[i].inspection;
-                        for (var j = 0; j < inspection.length; j++) {
-                            inspectionArr = inspection[j].phase;
-                            //  phase.push(inspection[j].phase);
+                    //         }
+                    //     }
+                    // }
+                    // for (var i = 0; i < img.length; i++) {
+                    //     for (var k = 0; k < this.idArr.length; k++) {
+                    //         if (this.idArr[k] == img[i].id) {
+                    //             img[i].issuePath = "/images/marker.png";
+                    //             img[i].classPath = "issue-marker";
+                    //         }
+                    //     }
+                    // }
 
 
-                            for (var k = 0; k < inspectionArr.length; k++) {
-                                phase = inspectionArr[k].img;
-                                for (var b = 0; b < phase.length; b++) {
-                                    // img.push(phase[b]);
-                                    for (var x = 0; x < img.length; x++) {
-                                        for (var l = 0; l < this.idArr.length; l++) {
-                                            if (this.idArr[l] == img[x].id &&
-                                                img[x].id == phase[b].id) {
-                                                phase[b] = img[x];
-                                            }
-                                        }
-                                    }
-                                }
+                    // for (var i = 0; i < this.dronesServiceResponse.length; i++) {
+                    //     inspection = null;
+                    //     inspectionArr = null;
+                    //     phase = null;
+                    //     inspection = this.dronesServiceResponse[i].inspection;
+                    //     for (var j = 0; j < inspection.length; j++) {
+                    //         inspectionArr = inspection[j].phase;
+                    //         //  phase.push(inspection[j].phase);
 
-                            }
-                        }
-                    }
+
+                    //         for (var k = 0; k < inspectionArr.length; k++) {
+                    //             phase = inspectionArr[k].img;
+                    //             for (var b = 0; b < phase.length; b++) {
+                    //                 // img.push(phase[b]);
+                    //                 for (var x = 0; x < img.length; x++) {
+                    //                     for (var l = 0; l < this.idArr.length; l++) {
+                    //                         if (this.idArr[l] == img[x].id &&
+                    //                             img[x].id == phase[b].id) {
+                    //                             phase[b] = img[x];
+                    //                         }
+                    //                     }
+                    //                 }
+                    //             }
+
+                    //         }
+                    //     }
+                    // }
                     console.log('hi');
                     console.log(this.dronesServiceResponse);
                     debugger;
@@ -342,13 +350,12 @@
         });
     })();
     </script>
-
     <script>
-  document.addEventListener('WebComponentsReady', function() {
-    var ratings = document.querySelector('#ratings');
-    ratings.addEventListener('value-change', function() {
-      document.querySelector('#ratingsLabel').textContent = ratings.value;
+    document.addEventListener('WebComponentsReady', function() {
+        var ratings = document.querySelector('#ratings');
+        ratings.addEventListener('value-change', function() {
+            document.querySelector('#ratingsLabel').textContent = ratings.value;
+        });
     });
-  });
-</script>
+    </script>
 </dom-module>

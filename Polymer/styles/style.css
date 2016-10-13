@@ -522,8 +522,9 @@ app-route.style-scope.my-drone {
     margin: 0 auto;
     text-align: center;
     width: 40px;
-   /* left: 38%;*/
-   padding-left: 38%;
+    left: 38%;
+  /* padding-left: 38%;*/
+   z-index: 9;
 }
 .issue-marker1{
     position: absolute;
@@ -531,8 +532,9 @@ app-route.style-scope.my-drone {
     margin: 0 auto;
     text-align: center;
     width: 40px;
-    /*left: 38%;*/
-    padding-left: 38%;
+    left: 38%;
+    /*padding-left: 38%;*/
+    z-index: 9;
 }
 .abc.style-scope.my-media {
     float: left;
