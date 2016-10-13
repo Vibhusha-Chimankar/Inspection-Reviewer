@@ -6,31 +6,32 @@
         :host {
             display: block;
         }
+        
         #ratings {
-    --paper-slider-active-color: #ccc;
-    --paper-slider-height: 15px;
-    --paper-slider-container-color: #f0f0f0;
-    width: 70%;
-    float: left;
-    margin-top: 10px;
-
-  }
-
-
-  #progressContainer {
-    background: #fff;
-    border: 1px solid #ccc;
-    padding: 0 15px;
-    border-radius: 16px;
-}
-.paper-progress-0 #primaryProgress.paper-progress {
-    background: #ccc;
-    padding: 0 15px;
-    border-radius: 15px;
-}
+            --paper-slider-active-color: #ccc;
+            --paper-slider-height: 15px;
+            --paper-slider-container-color: #f0f0f0;
+            width: 70%;
+            float: left;
+            margin-top: 10px;
+        }
+        
+        #progressContainer {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 0 15px;
+            border-radius: 16px;
+        }
+        
+        .paper-progress-0 #primaryProgress.paper-progress {
+            background: #ccc;
+            padding: 0 15px;
+            border-radius: 15px;
+        }
         </style>
         <drones-data-service id="ajax" url="{{url}}" drones-service-response="{{droneServiceResponse}}">
         </drones-data-service>
+        <iron-ajax auto id="issueAjax" url="/issue-marker.json" handle-as="json" on-response="handleResponseIssueMarker"></iron-ajax>
         <div class="image-gallery">
             <template is="dom-repeat" items="{{dronesServiceResponse}}">
                 <template is="dom-repeat" items="{{item.inspection}}">
@@ -44,7 +45,7 @@
                                     <paper-icon-button raised on-dblclick="toggleDialog" on-tap="addQuantity" src="{{item.miniPath}}" class="phases-img" id="{{item.id}}">
                                         <!--  <img id="{{item.id}}" on-tap="addQuantity" raised class="phases-img" src="{{item.src}}"> -->
                                     </paper-icon-button>
-                                    <img class$="{{item.class}}" src="{{item.issuePath}}">
+                                    <!--  <img class$="{{item.class}}" src="{{item.issuePath}}"> -->
                                 </div>
                                 <!-- </div> -->
                                 <paper-dialog heading="" id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
@@ -87,7 +88,6 @@
                             </paper-dropdown-menu>
                             </span>
                                 </div>
-
                                 <div>
                                     <span>
                                 Comment:
@@ -97,8 +97,6 @@
                                     <paper-input label="enter comments here"></paper-input>
                             </span>
                                 </div>
-
-
                                 <div class="modal-footer ">
                                     <paper-button dialog-dismiss class="submit" on-click="editSubmitClick">Submit</paper-button>
                                     <paper-button dialog-dismiss class="close">Close</paper-button>
@@ -125,7 +123,6 @@
                 </template>
             </template>
         </div>
-
         <paper-slider id="ratings" pin snaps min="0" max="18" max-markers="18" step="1" value="4.15" editable></paper-slider>
         <paper-button class="reviewbtn pull-right">Review Issue</paper-button>
         <!--  <paper-dialog id="modal" modal>
@@ -167,6 +164,14 @@
                     notify: true
                         // observer: 'handleResponse'
                 },
+                issueMarkerServiceResponse: {
+                    type: Array,
+                    value: function() {
+                        return [];
+                    },
+                    notify: true,
+                    observer: 'handleResponseIssueMarker'
+                },
                 phase: {
                     type: Array,
                     notify: true,
@@ -194,6 +199,17 @@
                     this.url = localStorage.getItem('url');
                 }
 
+            },
+            handleResponseIssueMarker: function() {
+                this.issueMarkerServiceResponse = this.$.issueAjax.lastResponse;
+                console.log('issue-marker:');
+                console.log(this.issueMarkerServiceResponse);
+                for (var i = 0; i < this.issueMarkerServiceResponse.length; i++) {
+                    var elem = document.createElement("img");
+                    elem.setAttribute("src", this.issueMarkerServiceResponse[i].issuePath);
+                    elem.setAttribute("class", this.issueMarkerServiceResponse[i].class);
+                    document.getElementById(this.issueMarkerServiceResponse[i].id).appendChild(elem);
+                }
             },
             addQuantity: function(e) {
                 //debugger;
@@ -327,13 +343,12 @@
         });
     })();
     </script>
-
     <script>
-  document.addEventListener('WebComponentsReady', function() {
-    var ratings = document.querySelector('#ratings');
-    ratings.addEventListener('value-change', function() {
-      document.querySelector('#ratingsLabel').textContent = ratings.value;
+    document.addEventListener('WebComponentsReady', function() {
+        var ratings = document.querySelector('#ratings');
+        ratings.addEventListener('value-change', function() {
+            document.querySelector('#ratingsLabel').textContent = ratings.value;
+        });
     });
-  });
-</script>
+    </script>
 </dom-module>
