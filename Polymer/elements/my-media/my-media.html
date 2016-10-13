@@ -164,6 +164,10 @@
                     notify: true
                         // observer: 'handleResponse'
                 },
+                idArr: {
+                    type: Array,
+                    value: []
+                },
                 issueMarkerServiceResponse: {
                     type: Array,
                     value: function() {
@@ -178,10 +182,6 @@
                     value: function() {
                         return [];
                     }
-                },
-                idArr: {
-                    type: Array,
-                    value: []
                 },
                 url: {
                     type: String,
@@ -212,7 +212,7 @@
                 }
             },
             addQuantity: function(e) {
-                //debugger;
+                debugger;
                 var target = e.model.item.id;
                 var id = document.querySelector('#' + target),
                     style = window.getComputedStyle(id),
@@ -238,59 +238,59 @@
                 var id = null;
 
                 if (this.idArr.length > 0) {
-                    for (var i = 0; i < this.dronesServiceResponse.length; i++) {
-                        inspection = this.dronesServiceResponse[i].inspection;
-                        for (var j = 0; j < inspection.length; j++) {
-                            inspectionArr = inspection[j].phase;
-                            //  phase.push(inspection[j].phase);
+                    // for (var i = 0; i < this.dronesServiceResponse.length; i++) {
+                    //     inspection = this.dronesServiceResponse[i].inspection;
+                    //     for (var j = 0; j < inspection.length; j++) {
+                    //         inspectionArr = inspection[j].phase;
+                    //         //  phase.push(inspection[j].phase);
 
 
-                            for (var k = 0; k < inspectionArr.length; k++) {
-                                phase = inspectionArr[k].img;
-                                for (var b = 0; b < phase.length; b++) {
-                                    img.push(phase[b]);
-                                }
+                    //         for (var k = 0; k < inspectionArr.length; k++) {
+                    //             phase = inspectionArr[k].img;
+                    //             for (var b = 0; b < phase.length; b++) {
+                    //                 img.push(phase[b]);
+                    //             }
 
-                            }
-                        }
-                    }
-                    for (var i = 0; i < img.length; i++) {
-                        for (var k = 0; k < this.idArr.length; k++) {
-                            if (this.idArr[k] == img[i].id) {
-                                img[i].issuePath = "/images/marker.png";
-                                img[i].classPath = "issue-marker";
-                            }
-                        }
-                    }
-
-
-                    for (var i = 0; i < this.dronesServiceResponse.length; i++) {
-                        inspection = null;
-                        inspectionArr = null;
-                        phase = null;
-                        inspection = this.dronesServiceResponse[i].inspection;
-                        for (var j = 0; j < inspection.length; j++) {
-                            inspectionArr = inspection[j].phase;
-                            //  phase.push(inspection[j].phase);
+                    //         }
+                    //     }
+                    // }
+                    // for (var i = 0; i < img.length; i++) {
+                    //     for (var k = 0; k < this.idArr.length; k++) {
+                    //         if (this.idArr[k] == img[i].id) {
+                    //             img[i].issuePath = "/images/marker.png";
+                    //             img[i].classPath = "issue-marker";
+                    //         }
+                    //     }
+                    // }
 
 
-                            for (var k = 0; k < inspectionArr.length; k++) {
-                                phase = inspectionArr[k].img;
-                                for (var b = 0; b < phase.length; b++) {
-                                    // img.push(phase[b]);
-                                    for (var x = 0; x < img.length; x++) {
-                                        for (var l = 0; l < this.idArr.length; l++) {
-                                            if (this.idArr[l] == img[x].id &&
-                                                img[x].id == phase[b].id) {
-                                                phase[b] = img[x];
-                                            }
-                                        }
-                                    }
-                                }
+                    // for (var i = 0; i < this.dronesServiceResponse.length; i++) {
+                    //     inspection = null;
+                    //     inspectionArr = null;
+                    //     phase = null;
+                    //     inspection = this.dronesServiceResponse[i].inspection;
+                    //     for (var j = 0; j < inspection.length; j++) {
+                    //         inspectionArr = inspection[j].phase;
+                    //         //  phase.push(inspection[j].phase);
 
-                            }
-                        }
-                    }
+
+                    //         for (var k = 0; k < inspectionArr.length; k++) {
+                    //             phase = inspectionArr[k].img;
+                    //             for (var b = 0; b < phase.length; b++) {
+                    //                 // img.push(phase[b]);
+                    //                 for (var x = 0; x < img.length; x++) {
+                    //                     for (var l = 0; l < this.idArr.length; l++) {
+                    //                         if (this.idArr[l] == img[x].id &&
+                    //                             img[x].id == phase[b].id) {
+                    //                             phase[b] = img[x];
+                    //                         }
+                    //                     }
+                    //                 }
+                    //             }
+
+                    //         }
+                    //     }
+                    // }
                     console.log('hi');
                     console.log(this.dronesServiceResponse);
                     debugger;
