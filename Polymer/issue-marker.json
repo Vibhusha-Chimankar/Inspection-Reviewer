@@ -1,11 +1,23 @@
 [{
     "issuePath": "/images/marker.png",
     "class": "issue-marker",
-    "id": "p1"
+    "id": "p1",
+    "metaData": [
+                {
+                  "altitude":"4545.5645",
+                  "longitude":"5654"
+                }
+              ]
 }, {
     "issuePath": "",
     "class": "",
-    "id": "p2"
+    "id": "p2",
+    "metaData": [
+                {
+                  "altitude":"7879.645",
+                  "longitude":"4039.24"
+                }
+              ]
 }, {
     "issuePath": "",
     "class": "",
