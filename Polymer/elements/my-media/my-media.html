@@ -8,9 +8,9 @@
         }
         
         #ratings {
-            --paper-slider-active-color: #ccc;
+            --paper-slider-active-color: #fff;
             --paper-slider-height: 15px;
-            --paper-slider-container-color: #f0f0f0;
+            --paper-slider-container-color: #fff;
             width: 50%;
             float: left;
             margin-top: 10px;
@@ -49,11 +49,15 @@
                                     </div>
                                     <paper-dialog heading="" id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
                                         <div class="img-data">
-                                        <div class="zoomed-img">
+                                        <div class="zoomed-img flexchild">
                                         <img src="{{item.miniPath}}" id="expandImg">
                                         </div>
-                                        <div class="img-metadata">
-                                        hi
+                                        <div class="img-metadata flexchild">
+                                        <h3> Altitude </h3>
+                                        <span id="imgAltitude"> 42.026914</span>
+                                        <hr>
+                                         <h3> Longitude </h3>
+                                        <span id="imgLongitude"> -93.646637 </span>
                                         </div>
                                         </div>
                                         <div class="modal-footer ">
@@ -181,6 +185,13 @@
                         return [];
                     }
                 },
+                meta: {
+                    type: Array,
+                    notify: true,
+                    value: function() {
+                        return [];
+                    }
+                },
                 url: {
                     type: String,
                     value: '/drones.json'
@@ -199,6 +210,7 @@
 
             },
             handleResponseIssueMarker: function() {
+                debugger;
                 this.issueMarkerServiceResponse = this.$.issueAjax.lastResponse;
                 console.log('issue-marker:');
                 console.log(this.issueMarkerServiceResponse);
@@ -314,10 +326,23 @@
                 }
             },
             toggleDialog: function(e) {
+                debugger;
                 var dialog = document.querySelector('#dialog');
                 var expand = document.querySelector('#expandImg');
+                var altitude = document.querySelector('#imgAltitude');
                 expand.src = e.model.item.miniPath;
                 dialog.toggle();
+var a = [];
+                var id = null;
+                id = e.model.item.id;
+                for (var i = 0; i < this.issueMarkerServiceResponse.length; i++) {
+                    if(id == this.issueMarkerServiceResponse[i].id){
+
+                        a = this.issueMarkerServiceResponse[i].metaData;
+                        break;
+                    }
+                         altitude = (a[0].altitude);
+                    }
             },
             toggleDialogEdit: function(e) {
                 var dialog = document.querySelector('#editDialog');

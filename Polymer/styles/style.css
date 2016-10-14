@@ -637,7 +637,7 @@ paper-tooltip.my-issues.paper-tooltip-0 {
     width: -1px;
     height: 10px;
     border-radius: 50%;
-    background-color: #adadad;
+    background-color: #ccc;
     position: relative;
     top: -7px;
 }
@@ -674,7 +674,6 @@ paper-tooltip.my-issues.paper-tooltip-0 {
 
 .paper-progress-0 #progressContainer.paper-progress {
     border: 1px solid #ccc;
-    border-radius: 8px;
 }
 .paper-slider-0 .bar-container.paper-slider
 {
@@ -711,4 +710,49 @@ input#button {
 .paper-input-container-0 .input-content.paper-input-container
 {
     margin-left: 0;
+}
+
+
+
+.img-data {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
+    width: 100%;
+    left: 0 !important;
+    top: 50px !important;
+}
+
+.img-data > .zoomed-img {
+    margin: 4px;
+    background: #fff;
+    flex: 0 0 75%;
+    order: 1;
+}
+
+.img-data > .img-metadata {
+    margin: 4px;
+    background: #fff;
+    flex: 0 0 22%;
+    order: 2;
+}
+paper-dialog#dialog {
+    width: 100%;
+    left: 0 !important;
+}
+img#expandImg {
+    width: 97%;
+    padding: 0 1%;
+}
+.paper-slider-0 .slider-markers.paper-slider
+{
+    left: 0;
+    right:0;
+    top: 23px;
+}
+.img-metadata h3
+{
+    margin: 0;
 }
