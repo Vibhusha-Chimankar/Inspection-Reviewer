@@ -632,9 +632,9 @@ paper-tooltip.my-issues.paper-tooltip-0 {
 .paper-slider-0 .slider-markers.paper-slider::after, .paper-slider-0 .slider-marker.paper-slider::after {
     content: "";
     display: block;
-    margin-left: -1px;
-    width: 2px;
-    height: 14px;
+    margin-left: 0px;
+    width: -1px;
+    height: 10px;
     border-radius: 50%;
     background-color: #adadad;
     position: relative;
