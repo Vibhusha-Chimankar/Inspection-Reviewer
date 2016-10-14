@@ -11,7 +11,7 @@
             --paper-slider-active-color: #ccc;
             --paper-slider-height: 15px;
             --paper-slider-container-color: #f0f0f0;
-            width: 70%;
+            width: 50%;
             float: left;
             margin-top: 10px;
         }
@@ -48,15 +48,14 @@
                                         <!--  <img class$="{{item.class}}" src="{{item.issuePath}}"> -->
                                     </div>
                                     <paper-dialog heading="" id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
-                                        <paper-tabs selected="0">
-                                            <paper-tab>TAB 1</paper-tab>
-                                            <paper-tab>TAB 2</paper-tab>
-                                        </paper-tabs>
-                                        <iron-pages selected="{{selected}}">
-                                            <div>Page 1</div>
-                                            <div>Page 2</div>
-                                        </iron-pages>
+                                        <div class="img-data">
+                                        <div class="zoomed-img">
                                         <img src="{{item.miniPath}}" id="expandImg">
+                                        </div>
+                                        <div class="img-metadata">
+                                        hi
+                                        </div>
+                                        </div>
                                         <div class="modal-footer ">
                                             <paper-button dialog-dismiss class="btn-default">Close</paper-button>
                                         </div>
