@@ -611,7 +611,8 @@ paper-tooltip.my-issues.paper-tooltip-0 {
     background: #fff;
     border: 5px solid #999;
     z-index: 999;
-    line-height: 40px
+    line-height: 40px;
+    top: 0;
 }
 .input-content.label-is-floating.style-scope.paper-input-container {
     background: #f0f0f0;
