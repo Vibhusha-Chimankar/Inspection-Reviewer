@@ -6,9 +6,14 @@
       :host {
         display: block;
       }
+      .bottom-ico{ float: left;
+    width: 100%;
+    padding-top: 10px;
+    bottom: 0;
+    position: absolute;}  
     </style>
     <!-- <iron-ajax auto url="/drones.json" handle-as="json" last-response="{{data}}" ></iron-ajax> -->
-
+     <div>
     <drones-data-service url="/issues.json" drones-service-response="{{issuesServiceResponse}}">
     </drones-data-service>
     <iron-selector selected="0">
@@ -20,14 +25,16 @@
     </template>
     </a>
     </iron-selector>
+    </div>
     <br/>
+    <div class="bottom-ico">
         <span style="padding-left: 15px">
   <paper-icon-button icon="add-circle" class="add-delete-view"></paper-icon-button>
   </span>
         <span style="padding-left: 25px;">
   <paper-icon-button icon="delete" class="add-delete-view"></paper-icon-button>
   </span>
- 
+  </div>
   </template>
   <script>
   (function() {

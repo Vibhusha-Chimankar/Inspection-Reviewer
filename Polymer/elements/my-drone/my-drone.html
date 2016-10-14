@@ -12,6 +12,16 @@
             text-align: right;
             margin-bottom: 30px;
         }
+        .drop-left{    
+    width: 50%;
+    float: left;
+    text-align: center;}
+
+ .drop-right{    
+    width: 50%;
+    float: right;
+    text-align: center;}
+    .clr{clear: both}
         </style>
         <drones-data-service id="ajaxDrone" url="{{url}}" drones-service-response="{{dronesServiceResponse}}">
         </drones-data-service>
@@ -22,8 +32,24 @@
     <drones-data-service url="/intake.json" drones-service-response="{{dronesServiceResponse}}">
     </drones-data-service> -->
         <!--  <iron-ajax id="ajax" url="/drones.json" on-response="handleResponse" auto></iron-ajax> -->
-        <div class="headin"></div>
+       
+<div class="headin">
+       <div calss="drop-left" style="width: 30%;  float: left; text-align: center;">
+       <select style="padding: 6px;font-size: 20px;border: none;">
+         <option>Port Arthur, TX – Martinez</option>
+        
+       </select>
+       </div>
+         <div calss="drop-left" style="width: 70%;  float: right; text-align: center;">
+       <select style="padding: 6px;font-size: 20px;border: none;">
+         <option>Inspection</option>
+        
+       </select>
+       </div>
+        <div class="clr"></div>
+        </div>
         <paper-drawer-panel>
+         
             <paper-header-panel main id="main">
                 <div class="left-section">
                     <paper-header-panel drawer left-drawer>
