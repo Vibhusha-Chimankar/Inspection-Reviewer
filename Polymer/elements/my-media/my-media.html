@@ -39,22 +39,30 @@
                         <template is="dom-repeat" items="{{item.phase}}">
                             <span class="phase-title">{{item.title}}<label class="phase-title">0 issues</label><paper-checkbox class="paper-checkbox">NEED REVIEW</paper-checkbox></span>
                             <br/>
-                            <template is="dom-repeat" items="{{item.img}}">
-                                <!--  <div class="modal-body"> -->
-                                <div class="abc" id="abc">
-                                    <paper-icon-button raised on-dblclick="toggleDialog" on-tap="addQuantity" src="{{item.miniPath}}" class="phases-img" id="{{item.id}}">
-                                        <!--  <img id="{{item.id}}" on-tap="addQuantity" raised class="phases-img" src="{{item.src}}"> -->
-                                    </paper-icon-button>
-                                    <!--  <img class$="{{item.class}}" src="{{item.issuePath}}"> -->
-                                </div>
-                                <!-- </div> -->
-                                <paper-dialog heading="" id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
-                                    <img src="{{item.miniPath}}" id="expandImg">
-                                    <div class="modal-footer ">
-                                        <paper-button dialog-dismiss class="btn-default">Close</paper-button>
+                            <div class="modal-body">
+                                <template is="dom-repeat" items="{{item.img}}">
+                                    <div class="abc" id="abc">
+                                        <paper-icon-button raised on-dblclick="toggleDialog" on-tap="addQuantity" src="{{item.miniPath}}" class="phases-img" id="{{item.id}}">
+                                            <!--  <img id="{{item.id}}" on-tap="addQuantity" raised class="phases-img" src="{{item.src}}"> -->
+                                        </paper-icon-button>
+                                        <!--  <img class$="{{item.class}}" src="{{item.issuePath}}"> -->
                                     </div>
-                                </paper-dialog>
-                            </template>
+                                    <paper-dialog heading="" id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+                                        <paper-tabs selected="0">
+                                            <paper-tab>TAB 1</paper-tab>
+                                            <paper-tab>TAB 2</paper-tab>
+                                        </paper-tabs>
+                                        <iron-pages selected="{{selected}}">
+                                            <div>Page 1</div>
+                                            <div>Page 2</div>
+                                        </iron-pages>
+                                        <img src="{{item.miniPath}}" id="expandImg">
+                                        <div class="modal-footer ">
+                                            <paper-button dialog-dismiss class="btn-default">Close</paper-button>
+                                        </div>
+                                    </paper-dialog>
+                                </template>
+                            </div>
                             <paper-dialog heading="" id="editDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
                                 <div>
                                     <span>
@@ -88,35 +96,26 @@
                             </paper-dropdown-menu>
                             </span>
                                 </div>
-                                <div>
-                                    <span>
-                                Comment:
-                                <br/>
-                            </span>
-                                    <span>
-                                    <paper-input label="enter comments here"></paper-input>
-                            </span>
-                                </div>
                                 <div class="modal-footer ">
                                     <paper-button dialog-dismiss class="submit" on-click="editSubmitClick">Submit</paper-button>
                                     <paper-button dialog-dismiss class="close">Close</paper-button>
                                 </div>
                             </paper-dialog>
-                            <!-- <paper-dialog heading="" id="commentDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+                            <paper-dialog heading="" id="commentDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
                                 <span>Enter Comments Here:</span>
                                 <paper-textarea label="" id="textarea"></paper-textarea>
                                 <div class="modal-footer">
                                     <paper-button dialog-dismiss class="submit">Submit</paper-button>
                                     <paper-button dialog-dismiss class="close">Close</paper-button>
                                 </div>
-                            </paper-dialog> -->
-                            <div>
+                            </paper-dialog>
+                            <div class="editSection">
                                 <span class="edit">
                         <paper-icon-button src="/images/edit.png" on-click="toggleDialogEdit"></paper-icon-button>
                         </span>
-                                <!-- <span class="comment">
+                                <span class="comment">
                         <paper-icon-button src="/images/comment.png" on-click="toggleDialogComment"></paper-icon-button>
-                        </span> -->
+                        </span>
                             </div>
                         </template>
                     </div>
@@ -204,15 +203,17 @@
                 this.issueMarkerServiceResponse = this.$.issueAjax.lastResponse;
                 console.log('issue-marker:');
                 console.log(this.issueMarkerServiceResponse);
-                for (var i = 0; i < this.issueMarkerServiceResponse.length; i++) {
-                    var elem = document.createElement("img");
-                    elem.setAttribute("src", this.issueMarkerServiceResponse[i].issuePath);
-                    elem.setAttribute("class", this.issueMarkerServiceResponse[i].class);
-                    document.getElementById(this.issueMarkerServiceResponse[i].id).appendChild(elem);
+                if (this.issueMarkerServiceResponse != undefined) {
+                    for (var i = 0; i < this.issueMarkerServiceResponse.length; i++) {
+                        var elem = document.createElement("img");
+                        elem.setAttribute("src", this.issueMarkerServiceResponse[i].issuePath);
+                        elem.setAttribute("class", this.issueMarkerServiceResponse[i].class);
+                        document.getElementById(this.issueMarkerServiceResponse[i].id).appendChild(elem);
+                    }
                 }
             },
             addQuantity: function(e) {
-                debugger;
+                //debugger;
                 var target = e.model.item.id;
                 var id = document.querySelector('#' + target),
                     style = window.getComputedStyle(id),
@@ -293,12 +294,13 @@
                     // }
                     console.log('hi');
                     console.log(this.dronesServiceResponse);
-                    debugger;
+                    //debugger;
                     this.url = "/drones1.json";
                     localStorage.setItem('url', this.url);
                     localStorage.setItem('issueUrl', '/issues1.json');
                     document.getElementById('ajax').url = this.url;
                     document.getElementById('ajax').generateRequest();
+                    document.getElementById('issueAjax').generateRequest();
                     this.urlState('/my-iassets');
                     var a = document.querySelector("#media");
                     var b = document.querySelector("#issues");
@@ -322,15 +324,15 @@
                 var dialog = document.querySelector('#editDialog');
                 dialog.toggle();
             },
-            /*toggleDialogComment: function(e) {
+            toggleDialogComment: function(e) {
                 var dialog = document.querySelector('#commentDialog');
                 dialog.toggle();
-            },*/
+            },
             stringify: function(obj) {
                 return JSON.stringify(obj);
             },
             urlState: function(urlPath) {
-                debugger;
+                //debugger;
                 window.history.pushState('', '', urlPath);
                 window.dispatchEvent(new PopStateEvent('popstate', {
                     bubbles: false,
