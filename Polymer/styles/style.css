@@ -37,7 +37,7 @@ body {
 }
 
 #main > .right-section {
-   margin: 4px 1px 4px 8px;
+   margin: 4px;
     background: #fff;
     flex: 0 0 15%;
     order: 2;
@@ -491,7 +491,7 @@ app-route.style-scope.my-drone {
     overflow-y: auto;
     display: block;
     min-height: 250px;
-    max-height: 733px;
+    max-height: 680px;
     float:left;
     width:100%;
 }
