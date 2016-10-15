@@ -60,9 +60,39 @@
                                         <hr>
                                          <h3> Longitude </h3>
                                         <span id="imgLongitude"> -93.646637 </span>
+                                        <div class="defectDrop">
+                                            <span>Defect Type:</span>
+                                            <paper-dropdown-menu>
+                                                <paper-listbox class="dropdown-content" selected="0">
+                                                    <paper-item>Corrosion</paper-item>
+                                                    <paper-item>Thinning</paper-item>
+                                                    <paper-item>Stress cracking</paper-item>
+                                                    <paper-item>Mechanical Fatigue</paper-item>
+                                                    <paper-item>Thermal Fatigue</paper-item>
+                                                </paper-listbox>
+                                            </paper-dropdown-menu>
+                                            <span>Status:</span>
+                                            <paper-dropdown-menu>
+                                                <paper-listbox class="dropdown-content" selected="0">
+                                                    <paper-item>Fix</paper-item>
+                                                    <paper-item>Continue to monitor</paper-item>
+                                                    <paper-item>Manual Inspection</paper-item>
+                                                </paper-listbox>
+                                            </paper-dropdown-menu>
+                                            <span>Enter Comments Here:</span>
+                                            <paper-textarea label="" id="textarea"></paper-textarea>
                                         </div>
+
+                                        <div class="editCropSection">
+                                        <iron-icon icon="icons:flip-to-back"></iron-icon>
+                                        <iron-icon icon="icons:create"></iron-icon>
+                                        </div>
+
+                                        </div>
+                                        
                                         </div>
                                         <div class="modal-footer ">
+                                            <paper-button dialog-dismiss class="btn-default">Save</paper-button>
                                             <paper-button dialog-dismiss class="btn-default">Close</paper-button>
                                         </div>
                                     </paper-dialog>
@@ -130,7 +160,7 @@
                 </template>
             </template>
         </div>
-        <paper-slider id="ratings" pin snaps min="0" max="18" max-markers="18" step="1" value="4.15" editable></paper-slider>
+        <!-- <paper-slider id="ratings" pin snaps min="0" max="18" max-markers="18" step="1" value="4.15" editable></paper-slider> -->
         <paper-button class="reviewbtn pull-right">Review Issue</paper-button>
         <!--  <paper-dialog id="modal" modal>
             <template is="dom-repeat " items="{{dronesServiceResponse}} ">
@@ -374,12 +404,12 @@ var a = [];
         });
     })();
     </script>
-    <script>
+    <!-- <script>
     document.addEventListener('WebComponentsReady', function() {
         var ratings = document.querySelector('#ratings');
         ratings.addEventListener('value-change', function() {
             document.querySelector('#ratingsLabel').textContent = ratings.value;
         });
     });
-    </script>
+    </script> -->
 </dom-module>
