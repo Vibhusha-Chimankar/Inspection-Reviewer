@@ -505,7 +505,7 @@ app-route.style-scope.my-drone {
 }
 #report-type {
     width: 35%;
-    margin: 45px 15px;
+    margin: 15px 15px;
 }
 .report-type
 {
@@ -611,7 +611,7 @@ paper-tooltip.my-issues.paper-tooltip-0 {
     height: 49px;
     background: #fff;
     border-bottom: 0 solid #636363;
-    z-index: 999;
+    z-index: 10;
     line-height: 40px;
     top: 0;
 }
@@ -754,4 +754,16 @@ img#expandImg {
 {
     margin: 0;
 }
-
+.defectDrop span {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+.editCropSection {
+    position: absolute;
+    bottom: 86px;
+    border-top: 1px solid #ccc;
+    width: 200px;
+    float: left;
+    padding: 10px;
+}

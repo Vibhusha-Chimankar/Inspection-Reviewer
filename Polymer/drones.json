@@ -3,6 +3,42 @@
       "id": "0",
       "title": "Flare Stack 2",
       "url": "my-assets",
+      "issues-markers":[
+        {
+          "path": "/images/marker.png",
+          "targeted-img":[
+            {
+              "img":[
+                {
+                  "src":"/images/0001.jpg"
+                },
+                {
+                  "src":"/images/0004.jpg"
+                }
+              ]
+            }
+          ]
+        },
+         {
+          "path": "/images/marker1.png",
+          "targeted-img":[
+            {
+              "img":[
+                {
+                  "src":"/images/0018.jpg"
+                },
+                {
+                  "src":"/images/0014.jpg"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "path": "/images/marker2.png"
+        }
+
+      ],
       "inspection":[
         {
           "url":"my-media",
@@ -540,6 +576,14 @@
       "url": "my-assets",
       "id": "1",
       "title": "Compressor 7",
+      "issues-markers":[
+        {
+          "path": "/images/marker1.png"
+        },
+        {
+          "path": "/images/marker2.png"
+        }
+      ],
       "inspection":[
         
       ]
@@ -550,6 +594,17 @@
       "url": "my-assets",
       "id": "2",
       "title": "Tank 23",
+      "issues-markers":[
+        {
+          "path": "/images/marker.png"
+        },
+        {
+          "path": "/images/marker4.png"
+        },
+        {
+          "path": "/images/marker3.png"
+        }
+      ],
       "inspection":[
         
       ]
@@ -559,6 +614,14 @@
       "url": "my-assets",
       "id": "3",
       "title": "Intake 33",
+      "issues-markers":[
+        {
+          "path": "/images/marker.png"
+        },
+        {
+          "path": "/images/marker1.png"
+        }
+      ],
       "inspection":[
         
       ]
