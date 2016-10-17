@@ -392,7 +392,7 @@ paper-button[autofocus] {
 }
 
 .reviewbtn {
-    margin: 12px 22px 0 0;
+    margin: 0px 22px 0 0;
     padding: 15px 25px;
     background: #3E87E8;
     color: #fff;
@@ -438,7 +438,7 @@ paper-button[autofocus] {
     float: left;
     /*width: 100%;*/
     padding-top: 10px;
-    bottom: 0;
+    bottom: 25px;
     position: absolute;
 }
 
@@ -448,12 +448,12 @@ paper-button[autofocus] {
 }
 .paper-input-container-0 {
     display: block;
-    padding: 8px 0;
-    border: 1px solid #A9A9A9;
+    padding: 0;
+    border: none;
     /* color: #e6e6e6; */
     background: #E4E4EA;
     /*width: 390px;*/
-    /*height: 8px;*/
+    height: 0px;
     border-radius: 2px;
 }
 .paper-input-container-0 .underline.paper-input-container {
@@ -515,7 +515,7 @@ app-route.style-scope.my-drone {
 
 }
 #report-type .input-content.label-is-floating.style-scope.paper-input-container {
-    top: -28px;
+    top: 0px !important;
 }
 .issue-marker{
     position: absolute;
@@ -699,7 +699,7 @@ input#button {
     width: 100%;
     text-align: center;
 }
-.paper-input-container-0 {
+/*.paper-input-container-0 {
     display: block;
     padding: 8px 0;
     border: 1px solid #A9A9A9;
@@ -707,7 +707,7 @@ input#button {
     height: 20px;
     border-radius: 2px;
     line-height: 0;
-}
+}*/
 .paper-input-container-0 .input-content.paper-input-container
 {
     margin-left: 0;
@@ -757,13 +757,42 @@ img#expandImg {
 .defectDrop span {
     width: 100%;
     float: left;
-    margin-bottom: 10px;
+    margin-bottom: -5px;
+    margin-top: 0px;
+    padding-top: 10px;
+    font-weight: 600;
 }
 .editCropSection {
     position: absolute;
-    bottom: 86px;
-    border-top: 1px solid #ccc;
-    width: 200px;
     float: left;
     padding: 10px;
+    top: 32px;
+    left: 17px;
+    background: rgba(255,255,255,0.8);
+}
+.reviewbtn.pull-right.reviewMargin
+{
+    margin-top: 25px;
+}
+.editCropSection iron-icon {
+    padding: 0 5px;
+}
+.floated-label-placeholder.style-scope.paper-input-container {
+    display: none;
+}
+.submit.addComment{
+    margin: 15px 0;
+}
+paper-textarea#commentSection {
+    float: left;
+    width: 100%;
+    margin-top: 5px;
+}
+#appendMsg {
+    float: left;
+    width: 275px;
+    display: block;
+    overflow-wrap: break-word;
+    overflow-y: auto;
+    margin: 10px 0;
 }
