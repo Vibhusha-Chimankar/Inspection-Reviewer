@@ -80,7 +80,9 @@
                                                 </paper-listbox>
                                             </paper-dropdown-menu>
                                             <span>Enter Comments Here:</span>
-                                            <paper-textarea label="" id="textarea"></paper-textarea>
+                                            <div id="appendMsg"></div>
+                                            <paper-textarea label="" id="commentSection"></paper-textarea>
+                                            <paper-button class="submit addComment" on-click="submitComment">Add</paper-button>
                                         </div>
 
                                         <div class="editCropSection">
@@ -161,7 +163,7 @@
             </template>
         </div>
         <!-- <paper-slider id="ratings" pin snaps min="0" max="18" max-markers="18" step="1" value="4.15" editable></paper-slider> -->
-        <paper-button class="reviewbtn pull-right">Review Issue</paper-button>
+        <paper-button class="reviewbtn pull-right reviewMargin">Review Issue</paper-button>
         <!--  <paper-dialog id="modal" modal>
             <template is="dom-repeat " items="{{dronesServiceResponse}} ">
                 <template is="dom-repeat " items="{{item.inspection}} ">
@@ -364,10 +366,10 @@
                 debugger;
                 var dialog = document.querySelector('#dialog');
                 var expand = document.querySelector('#expandImg');
-                var altitude = document.querySelector('#imgAltitude');
+                /*var altitude = document.querySelector('#imgAltitude');*/
                 expand.src = e.model.item.miniPath;
                 dialog.toggle();
-var a = [];
+                /*var a = [];
                 var id = null;
                 id = e.model.item.id;
                 for (var i = 0; i < this.issueMarkerServiceResponse.length; i++) {
@@ -377,7 +379,7 @@ var a = [];
                         break;
                     }
                          altitude = (a[0].altitude);
-                    }
+                    }*/
             },
             toggleDialogEdit: function(e) {
                 var dialog = document.querySelector('#editDialog');
@@ -386,6 +388,22 @@ var a = [];
             toggleDialogComment: function(e) {
                 var dialog = document.querySelector('#commentDialog');
                 dialog.toggle();
+            },
+            submitComment : function(e){
+                debugger;
+                var id = null;
+                id = e.model.item.id;
+                for (var i = 0; i < this.issueMarkerServiceResponse.length; i++) {
+                    if(id == this.issueMarkerServiceResponse[i].id){
+                var comments = document.querySelector("#commentSection").value;
+                document.querySelector('#appendMsg').innerHTML = comments;
+                
+                    }
+                    else
+                    {
+                        comments = null;
+                    }
+            }
             },
             stringify: function(obj) {
                 return JSON.stringify(obj);
