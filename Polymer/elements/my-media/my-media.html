@@ -37,15 +37,10 @@
         
         .dailog-box {
                 max-width: 100%;
-                background: #fff;
-                box-shadow: -1px 8px 5px #999;
-                margin: 1%;
-                padding: 10px;
-                position: fixed;
+                position: absolute;
                 z-index: 17;
                 display: none;
-                top: 63px;
-                left: 0;
+              
         }
         
         .dailog-box::before {
@@ -58,6 +53,16 @@
            top: 0;
            left: 0;
            z-index: -1; 
+        }
+        .dialog-container.style-scope.my-media {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            z-index: 99999;
+            background: #fff;
+            box-shadow: 2px 3px 4px #ccc;
+            margin: 1%;
+            padding: 10px;
         }
         </style>
         <drones-data-service id="ajax" url="{{url}}" drones-service-response="{{droneServiceResponse}}">
@@ -79,7 +84,9 @@
                                         <!--  <img class$="{{item.class}}" src="{{item.issuePath}}"> -->
                                     </div>
                                     <!--  <paper-dialog heading="" id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop> -->
+                                    
                                     <div class="dailog-box" id="dialog-box">
+                                    <div class="dialog-container">
                                         <div class="img-data">
                                             <div class="zoomed-img flexchild">
                                                 <img id="expandImg">
@@ -112,7 +119,8 @@
                                                     </paper-dropdown-menu>
                                                     <span>Enter Comments Here:</span>
                                                     <div id="appendMsg"></div>
-                                                    <paper-textarea label="" id="commentSection"></paper-textarea>
+                                                    <input type="text" id="commentSection">
+                                                    <!-- <paper-textarea label="" id="commentSection"></paper-textarea> -->
                                                     <paper-button class="submit addComment" on-click="submitComment">Add</paper-button>
                                                 </div>
                                                 <div class="editCropSection">
@@ -126,6 +134,7 @@
                                             <paper-button on-click="closeDialog" class="btn-default">Close</paper-button>
                                         </div>
                                         <!--     </paper-dialog> -->
+                                    </div>
                                     </div>
                                 </template>
                             </div>

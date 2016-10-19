@@ -744,8 +744,7 @@ paper-dialog#dialog {
     left: 0 !important;
 }
 img#expandImg {
-    width: 100%;
-    padding: 0 1%;
+    width: 98%;
 }
 .paper-slider-0 .slider-markers.paper-slider
 {
