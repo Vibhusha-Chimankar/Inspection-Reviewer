@@ -391,17 +391,24 @@
             },
             submitComment : function(e){
                 debugger;
+                var comments = null;
                 var id = null;
                 id = e.model.item.id;
                 for (var i = 0; i < this.issueMarkerServiceResponse.length; i++) {
-                    if(id == this.issueMarkerServiceResponse[i].id){
-                var comments = document.querySelector("#commentSection").value;
-                document.querySelector('#appendMsg').innerHTML = comments;
-                
+                if(id == this.issueMarkerServiceResponse[i].id){
+                    comments = document.querySelector('#commentSection').value;
+                    /*var count = comments.length*/
+                    /*for(var i=0; i < count; i++){
+                        console.log(comments);
+                    }*/
+                    document.querySelector('#appendMsg').innerHTML = comments;
+                        break;
                     }
                     else
                     {
-                        comments = null;
+
+                        comments = "";
+                        document.querySelector('#appendMsg').innerHTML = comments;
                     }
             }
             },
