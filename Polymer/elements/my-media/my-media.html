@@ -1,5 +1,7 @@
 <!-- Polymer web component used to display media list -->
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link type="text/css" rel="stylesheet" href="..\..\bower_components\annotorious-bower\css\annotorious.css" />
+<script type="text/javascript" src="..\..\bower_components\annotorious-bower\annotorious.min.js"></script>
 <dom-module id="my-media">
     <template>
         <style>
@@ -28,7 +30,35 @@
             padding: 0 15px;
             border-radius: 15px;
         }
-        .sect{border-bottom: 1px solid #ccc;}
+        
+        .sect {
+            border-bottom: 1px solid #ccc;
+        }
+        
+        .dailog-box {
+                max-width: 100%;
+                background: #fff;
+                box-shadow: -1px 8px 5px #999;
+                margin: 1%;
+                padding: 10px;
+                position: fixed;
+                z-index: 17;
+                display: none;
+                top: 63px;
+                left: 0;
+        }
+        
+        .dailog-box::before {
+           content: "";
+           display: block;
+           width: 100%;
+           height: 100%;
+           background: rgba(0, 0, 0, 0.6);
+           position: fixed;
+           top: 0;
+           left: 0;
+           z-index: -1; 
+        }
         </style>
         <drones-data-service id="ajax" url="{{url}}" drones-service-response="{{droneServiceResponse}}">
         </drones-data-service>
@@ -40,7 +70,6 @@
                         <template is="dom-repeat" items="{{item.phase}}">
                             <span class="phase-title">{{item.title}}<label class="phase-title">0 issues</label><paper-checkbox class="paper-checkbox">NEED REVIEW</paper-checkbox></span>
                             <br/>
-                            
                             <div class="modal-body">
                                 <template is="dom-repeat" items="{{item.img}}">
                                     <div class="abc" id="abc">
@@ -49,58 +78,57 @@
                                         </paper-icon-button>
                                         <!--  <img class$="{{item.class}}" src="{{item.issuePath}}"> -->
                                     </div>
-                                    <paper-dialog heading="" id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+                                    <!--  <paper-dialog heading="" id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop> -->
+                                    <div class="dailog-box" id="dialog-box">
                                         <div class="img-data">
-                                        <div class="zoomed-img flexchild">
-                                        <img src="{{item.miniPath}}" id="expandImg">
-                                        </div>
-                                        <div class="img-metadata flexchild">
-                                        <h3> Altitude </h3>
-                                        <span id="imgAltitude"> 42.026914</span>
-                                        <hr>
-                                         <h3> Longitude </h3>
-                                        <span id="imgLongitude"> -93.646637 </span>
-                                        <div class="defectDrop">
-                                            <span>Defect Type:</span>
-                                            <paper-dropdown-menu>
-                                                <paper-listbox class="dropdown-content" selected="0">
-                                                    <paper-item>Corrosion</paper-item>
-                                                    <paper-item>Thinning</paper-item>
-                                                    <paper-item>Stress cracking</paper-item>
-                                                    <paper-item>Mechanical Fatigue</paper-item>
-                                                    <paper-item>Thermal Fatigue</paper-item>
-                                                </paper-listbox>
-                                            </paper-dropdown-menu>
-                                            <span>Status:</span>
-                                            <paper-dropdown-menu>
-                                                <paper-listbox class="dropdown-content" selected="0">
-                                                    <paper-item>Fix</paper-item>
-                                                    <paper-item>Continue to monitor</paper-item>
-                                                    <paper-item>Manual Inspection</paper-item>
-                                                </paper-listbox>
-                                            </paper-dropdown-menu>
-                                            <span>Enter Comments Here:</span>
-                                            <div id="appendMsg"></div>
-                                            <paper-textarea label="" id="commentSection"></paper-textarea>
-                                            <paper-button class="submit addComment" on-click="submitComment">Add</paper-button>
-                                        </div>
-
-                                        <div class="editCropSection">
-                                        <iron-icon icon="icons:flip-to-back"></iron-icon>
-                                        <iron-icon icon="icons:create"></iron-icon>
-                                        </div>
-
-                                        </div>
-                                        
+                                            <div class="zoomed-img flexchild">
+                                                <img id="expandImg">
+                                            </div>
+                                            <div class="img-metadata flexchild">
+                                                <h3> Altitude </h3>
+                                                <span id="imgAltitude"> 42.026914</span>
+                                                <hr>
+                                                <h3> Longitude </h3>
+                                                <span id="imgLongitude"> -93.646637 </span>
+                                                <hr>
+                                                <div class="defectDrop">
+                                                    <span>Defect Type:</span>
+                                                    <paper-dropdown-menu>
+                                                        <paper-listbox class="dropdown-content" selected="0">
+                                                            <paper-item>Corrosion</paper-item>
+                                                            <paper-item>Thinning</paper-item>
+                                                            <paper-item>Stress cracking</paper-item>
+                                                            <paper-item>Mechanical Fatigue</paper-item>
+                                                            <paper-item>Thermal Fatigue</paper-item>
+                                                        </paper-listbox>
+                                                    </paper-dropdown-menu>
+                                                    <span>Status:</span>
+                                                    <paper-dropdown-menu>
+                                                        <paper-listbox class="dropdown-content" selected="0">
+                                                            <paper-item>Fix</paper-item>
+                                                            <paper-item>Continue to monitor</paper-item>
+                                                            <paper-item>Manual Inspection</paper-item>
+                                                        </paper-listbox>
+                                                    </paper-dropdown-menu>
+                                                    <span>Enter Comments Here:</span>
+                                                    <div id="appendMsg"></div>
+                                                    <paper-textarea label="" id="commentSection"></paper-textarea>
+                                                    <paper-button class="submit addComment" on-click="submitComment">Add</paper-button>
+                                                </div>
+                                                <div class="editCropSection">
+                                                    <iron-icon icon="icons:flip-to-back"></iron-icon>
+                                                    <iron-icon icon="icons:create"></iron-icon>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer ">
-                                            <paper-button dialog-dismiss class="btn-default">Save</paper-button>
-                                            <paper-button dialog-dismiss class="btn-default">Close</paper-button>
+                                            <paper-button on-click="saveDialog" class="btn-default">Save</paper-button>
+                                            <paper-button on-click="closeDialog" class="btn-default">Close</paper-button>
                                         </div>
-                                    </paper-dialog>
+                                        <!--     </paper-dialog> -->
+                                    </div>
                                 </template>
                             </div>
-
                             <paper-dialog heading="" id="editDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
                                 <div>
                                     <span>
@@ -147,7 +175,7 @@
                                     <paper-button dialog-dismiss class="close">Close</paper-button>
                                 </div>
                             </paper-dialog>
-                        <div class="editSection" style="border-bottom:1px solid #ccc">
+                            <div class="editSection" style="border-bottom:1px solid #ccc">
                                 <span class="edit">
                         <paper-icon-button src="/images/edit.png" on-click="toggleDialogEdit"></paper-icon-button>
                         </span>
@@ -155,8 +183,6 @@
                         <paper-icon-button src="/images/comment.png" on-click="toggleDialogComment"></paper-icon-button>
                         </span>
                             </div>
-                   
-
                         </template>
                     </div>
                 </template>
@@ -368,7 +394,21 @@
                 var expand = document.querySelector('#expandImg');
                 /*var altitude = document.querySelector('#imgAltitude');*/
                 expand.src = e.model.item.miniPath;
-                dialog.toggle();
+                var div = document.getElementById("dialog-box");
+                div.style.display = "block";
+                document.getElementById("expandImg").onload = function() {
+                    //alert("The image has loaded!");
+                    anno.activateSelector();
+                    anno.setProperties({
+                        stroke: 'red',
+                        stroke_width: 5,
+                        hi_stroke: '#3e87e8',
+                        hi_stroke_width: 5
+                    });
+                    anno.makeAnnotatable(document.getElementById('expandImg'));
+                    console.log(anno.getAnnotations());
+                };
+               // dialog.toggle();
                 /*var a = [];
                 var id = null;
                 id = e.model.item.id;
@@ -381,6 +421,14 @@
                          altitude = (a[0].altitude);
                     }*/
             },
+            closeDialog: function(){
+                var div = document.getElementById("dialog-box");
+                div.style.display = "none";
+                },
+            saveDialog:function(){
+                var div = document.getElementById("dialog-box");
+                div.style.display = "none";
+            },
             toggleDialogEdit: function(e) {
                 var dialog = document.querySelector('#editDialog');
                 dialog.toggle();
@@ -389,7 +437,7 @@
                 var dialog = document.querySelector('#commentDialog');
                 dialog.toggle();
             },
-            submitComment : function(e){
+            submitComment: function(e) {
                 debugger;
                 var comments = null;
                 var id = null;
@@ -409,9 +457,10 @@
 
                         comments = "";
                         document.querySelector('#appendMsg').innerHTML = comments;
+
                     }
             }
-            },
+        },
             stringify: function(obj) {
                 return JSON.stringify(obj);
             },
